@@ -1,6 +1,6 @@
 package com.example.module6.jwt.service;
 
-import com.example.cs.model.UserPrinciple;
+import com.example.module6.model.UserPrinciple;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
