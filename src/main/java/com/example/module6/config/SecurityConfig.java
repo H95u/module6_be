@@ -62,10 +62,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic().authenticationEntryPoint(restServicesEntryPoint());
         http.authorizeRequests()
                 .antMatchers("/api/auth/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/songs/**", "/api/singers/**","/api/types/**","/api/song-playlists/**","/api/user-playlists/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/songs/**", "/api/singers/**","/api/types/**","/api/song-playlists/**","/api/user-playlists/**").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/api/songs/**", "/api/singers/**","/api/types/**","/api/song-playlists/**","/api/user-playlists/**").permitAll()
-                .antMatchers(HttpMethod.PUT, "/api/songs/**", "/api/singers/**","/api/types/**","/api/song-playlists/**","/api/user-playlists/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/api/**").permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable();
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
