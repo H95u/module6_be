@@ -22,7 +22,9 @@ public class User {
     private Integer gender;
     private LocalDate dob;
     private Integer status;
-    private Double money;
+    private double money = 0;
+    private long viewCount = 0;
+    private long rentCount = 0;
     @ManyToMany
     private List<Options> options;
     @ManyToOne
