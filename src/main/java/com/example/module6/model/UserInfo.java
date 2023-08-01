@@ -16,7 +16,6 @@ public class UserInfo {
     private String img;
     private Double price;
     private Integer gender;
-    private String email;
     private LocalDate dob;
     private Integer status;
     private Double money;
