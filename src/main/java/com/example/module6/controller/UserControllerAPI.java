@@ -25,6 +25,12 @@ public class UserControllerAPI {
         return new ResponseEntity<>(userService.findAvailableUser(), HttpStatus.OK);
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<User>> findAll() {
+        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+    }
+
+
     @GetMapping("{id}")
     public ResponseEntity<?> findOne(@PathVariable Long id) {
         Optional<User> userOptional = userService.findOne(id);

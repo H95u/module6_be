@@ -36,11 +36,8 @@ public class AuthController {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtService.generateTokenLogin(authentication);
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User userInfo = userService.findByUsername(user.getUsername());
-        return ResponseEntity.ok(new JwtResponse(userInfo.getId(), jwt,
-                userInfo.getUsername(), userInfo.getUsername(), userDetails.getAuthorities()));
+        return ResponseEntity.ok(new ResponseEntity<>(userInfo, HttpStatus.OK));
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
