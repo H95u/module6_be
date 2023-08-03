@@ -40,6 +40,16 @@ public class UserControllerAPI {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/info/{id}")
+    public ResponseEntity<?> findOneInfo(@PathVariable Long id) {
+        Optional<User> userOptional = userService.findOne(id);
+        if (userOptional.isPresent()) {
+            return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+
     @PostMapping("/change-avatar/{id}")
     public ResponseEntity<?> changeAvatar(@PathVariable Long id,
                                           @RequestBody ImageDTO imageDTO) {
