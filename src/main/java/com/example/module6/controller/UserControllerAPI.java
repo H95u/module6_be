@@ -1,8 +1,10 @@
 package com.example.module6.controller;
 
 import com.example.module6.model.DTO.ImageDTO;
+import com.example.module6.model.DTO.UserMappingOptionsDTO;
 import com.example.module6.model.Options;
 import com.example.module6.model.User;
+import com.example.module6.request.CreateOptionRequest;
 import com.example.module6.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,5 +62,12 @@ public class UserControllerAPI {
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/add-options")
+    public ResponseEntity<?> addOptionToUser(@RequestBody CreateOptionRequest createOptionRequest) {
+        Long userId = 1L; // TODO: get userId from token
+        List<Options> options = userService.addOptionToUser(userId, createOptionRequest.getOptionIds());
+        return new ResponseEntity<>(options, HttpStatus.CREATED);
     }
 }

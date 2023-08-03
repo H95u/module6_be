@@ -2,7 +2,9 @@ package com.example.module6.repository;
 
 import com.example.module6.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,4 +15,12 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "select * from user where status = 1", nativeQuery = true)
     List<User> findAvailableUser();
+    @Modifying
+    @Query (value = "INSERT INTO user_options (user_id, options_id) VALUES (:userId, :optionId)", nativeQuery = true)
+    void addOptionToUser(@Param("userId") Long userId, @Param("optionId") Long optionId);
+    @Modifying
+    @Query(value = "DELETE FROM user_options WHERE user_id = :userId", nativeQuery = true)
+    void deleteUserOptionByUserId(@Param("userId") Long userId);
+
+
 }

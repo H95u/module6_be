@@ -1,7 +1,10 @@
 package com.example.module6.service.impl;
 
+import com.example.module6.model.DTO.UserMappingOptionsDTO;
+import com.example.module6.model.Options;
 import com.example.module6.model.User;
 import com.example.module6.model.UserPrinciple;
+import com.example.module6.repository.IOptionsRepository;
 import com.example.module6.repository.IUserRepository;
 import com.example.module6.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -38,6 +43,18 @@ public class UserService implements UserDetailsService, IUserService {
         return null;
     }
 
+    @Transactional
+    public List<Options> addOptionToUser(Long userId, List<Long> optionIds) {
+        iUserRepository.deleteUserOptionByUserId(userId);
+        for (Long optionId : optionIds) {
+            iUserRepository.addOptionToUser(userId, optionId);
+        }
+        Optional<User> userOptional = iUserRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            return userOptional.get().getOptions();
+        }
+        return Collections.emptyList();
+    }
 
     @Override
     public List<User> findAll() {
@@ -63,4 +80,6 @@ public class UserService implements UserDetailsService, IUserService {
     public void delete(Long aLong) {
         iUserRepository.deleteById(aLong);
     }
+
+
 }
