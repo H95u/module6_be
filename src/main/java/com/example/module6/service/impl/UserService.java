@@ -82,4 +82,8 @@ public class UserService implements UserDetailsService, IUserService {
     }
 
 
+    @Override
+    public List<User> searchByUsername(String username) {
+        return iUserRepository.searchByUsername(username);
+    }
 }

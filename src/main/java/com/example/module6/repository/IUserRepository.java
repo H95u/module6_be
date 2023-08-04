@@ -13,14 +13,19 @@ import java.util.List;
 public interface IUserRepository extends JpaRepository<User, Long> {
     User findAllByUsername(String username);
 
-    @Query(value = "select * from user where status = 1", nativeQuery = true)
+    @Query(value = "select * from lover_module6.user where status = 1", nativeQuery = true)
     List<User> findAvailableUser();
+
     @Modifying
-    @Query (value = "INSERT INTO user_options (user_id, options_id) VALUES (:userId, :optionId)", nativeQuery = true)
+    @Query(value = "INSERT INTO lover_module6.user_options (user_id, options_id) VALUES (:userId, :optionId)", nativeQuery = true)
     void addOptionToUser(@Param("userId") Long userId, @Param("optionId") Long optionId);
+
     @Modifying
-    @Query(value = "DELETE FROM user_options WHERE user_id = :userId", nativeQuery = true)
+    @Query(value = "DELETE FROM lover_module6.user_options WHERE user_id = :userId", nativeQuery = true)
     void deleteUserOptionByUserId(@Param("userId") Long userId);
+
+    @Query(value = "SELECT u FROM User u WHERE u.username LIKE %:username%")
+    List<User> searchByUsername(@Param("username") String username);
 
 
 }
