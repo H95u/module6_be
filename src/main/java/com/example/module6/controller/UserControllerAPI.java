@@ -78,7 +78,7 @@ public class UserControllerAPI {
     public ResponseEntity<List<User>> searchByTitle(@RequestParam(required = false, defaultValue = "") String username) {
         List<User> tours = userService.searchByUsername(username);
         if (tours.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(tours, HttpStatus.OK);
     }
