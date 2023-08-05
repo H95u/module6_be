@@ -15,6 +15,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.Period;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/api/auth")
@@ -44,6 +47,13 @@ public class AuthController {
     public ResponseEntity<?> register(@RequestBody User user) {
         String password = passwordEncoder.encode(user.getPassword());
         user.setPassword(password);
+        LocalDate nowDate = LocalDate.now();
+        LocalDate dob = user.getDob();
+
+        Period period = Period.between(dob, nowDate);
+        int age = period.getYears();
+        user.setImg("https://firebasestorage.googleapis.com/v0/b/module5-img.appspot.com/o/module6%2F8726291_robot_icon%20(1).png?alt=media&token=215d5e88-97f4-46a9-8ed6-4ca71ac62af8");
+        user.setAge(age);
         boolean check = userService.add(user);
         if (check) {
             return new ResponseEntity<>(HttpStatus.OK);

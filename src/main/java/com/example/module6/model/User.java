@@ -22,6 +22,7 @@ public class User {
     private Integer gender;
     private LocalDate dob;
     private Integer status;
+    private Integer age;
     private double money = 0;
     private long viewCount = 0;
     private long rentCount = 0;
