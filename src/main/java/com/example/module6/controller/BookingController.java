@@ -17,19 +17,17 @@ public class BookingController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/rent/{id}")
-    public Booking rentService(@PathVariable Long id, @RequestBody Booking booking) {
-        User bookingUser = userService.findOne(id).orElse(null);
+    @PostMapping("/rent")
+    public Booking rentService(@RequestBody Booking booking) {
         User bookedUser = userService.findOne(booking.getBookedUser().getId()).orElse(null);
-
-        if (bookingUser != null && bookedUser != null) {
-            booking.setBookingUser(bookingUser);
-            booking.setBookedUser(bookedUser);
+        if (bookedUser != null) {
+            booking.setBookingUser(userService.findOne(booking.getBookingUser().getId()).orElse(null));
             booking.setStatus(1);
             return bookingService.rentService(booking);
         }
         return null;
     }
+
 
 
     @PutMapping("/accept/{bookingId}")
