@@ -26,6 +26,7 @@ public class User {
     private double money = 0;
     private long viewCount = 0;
     private long rentCount = 0;
+    private LocalDate createdDate;
     @ManyToMany
     private List<Options> options;
     @ManyToOne
@@ -33,4 +34,8 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
+    @PrePersist
+    protected void onCreate() {
+        createdDate = LocalDate.now();
+    }
 }
