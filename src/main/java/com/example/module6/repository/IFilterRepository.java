@@ -12,7 +12,7 @@ import java.util.List;
 public interface IFilterRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE " +
             "(:gender IS NULL OR u.gender = :gender) " +
-            "AND (:address IS NULL OR u.address = :address) " +
+            "AND (:address IS NULL OR u.address.id = :address) " +
             "AND (:name IS NULL OR u.username LIKE %:name%) " +
             "AND (u.age BETWEEN :minAge AND :maxAge) " +
             "AND u.status = 1 " +
@@ -27,5 +27,5 @@ public interface IFilterRepository extends JpaRepository<User, Long> {
                                 @Param("maxAge") Integer maxAge,
                                 @Param("viewCount") Long viewCount,
                                 @Param("rentCount") Long rentCount);
-
+    List<User> findAllByOptionsId(Long optionId);
 }

@@ -55,4 +55,9 @@ public class FilterControllerAPI {
 //        return userService.findByCriteria(gender, addressId, viewCount, rentCount,
 //                minAge, maxAge, username, status);
 //    }
+    @PostMapping("/option/{id}")
+    public ResponseEntity<List<User>> findByOption(@PathVariable Long id) {
+        List<User> users = filterService.searchByOption(id);
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
 }

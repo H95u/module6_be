@@ -25,4 +25,9 @@ public class FilterService {
         );
     }
 
+    public List<User> searchByOption(Long optionId) {
+        return iFilterRepository.findAllByOptionsId(optionId);
+    }
+
+
 }
