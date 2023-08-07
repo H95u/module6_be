@@ -25,7 +25,6 @@ public class FilterControllerAPI {
 
     @Autowired
     private UserService userService;
-
     @GetMapping("/search")
     public List<User> searchUsers(@RequestParam(required = false) Integer gender,
                                   @RequestParam(required = false) Long addressId,
@@ -34,8 +33,10 @@ public class FilterControllerAPI {
                                   @RequestParam(required = false) Integer minAge,
                                   @RequestParam(required = false) Integer maxAge,
                                   @RequestParam(required = false) String username,
-                                  @RequestParam(required = false) Integer status) {
+                                  @RequestParam(required = false) Integer status,
+                                  @RequestParam(required = false) Integer viewCountOrder,
+                                  @RequestParam(required = false) Integer rentCountOrder) {
         return userService.findByCriteria(gender, addressId, viewCount, rentCount,
-                minAge, maxAge, username, status);
+                minAge, maxAge, username, status, viewCountOrder, rentCountOrder);
     }
 }

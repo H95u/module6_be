@@ -27,26 +27,34 @@ public interface IUserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT u FROM User u WHERE u.username LIKE %:username%")
     List<User> searchByUsername(@Param("username") String username);
 
-
     @Query("SELECT u FROM User u " +
             "WHERE (:gender IS NULL OR u.gender = :gender) " +
             "AND (:addressId IS NULL OR u.address.id = :addressId) " +
-            "AND (:viewCount IS NULL OR u.viewCount = :viewCount) " +
-            "AND (:rentCount IS NULL OR u.rentCount = :rentCount) " +
             "AND (:minAge IS NULL OR u.age >= :minAge) " +
             "AND (:maxAge IS NULL OR u.age <= :maxAge) " +
             "AND (:username IS NULL OR UPPER(u.username) LIKE CONCAT('%', UPPER(:username), '%')) " +
-            "AND (:status IS NULL OR u.status = :status)")
+            "AND (:status IS NULL OR u.status = :status) " +
+            "ORDER BY " +
+            "CASE WHEN :viewCount IS NOT NULL AND :viewCountOrder = 1 THEN u.viewCount END ASC, " +
+            "CASE WHEN :viewCount IS NOT NULL AND :viewCountOrder != 1 THEN u.viewCount END DESC, " +
+            "CASE WHEN :rentCount IS NOT NULL AND :rentCountOrder = 1 THEN u.rentCount END ASC, " +
+            "CASE WHEN :rentCount IS NOT NULL AND :rentCountOrder != 1 THEN u.rentCount END DESC, " +
+            "CASE WHEN :viewCount IS NULL AND :rentCount IS NULL THEN u.id END ASC")
     List<User> findByCriteria(
             @Param("gender") Integer gender,
             @Param("addressId") Long addressId,
-            @Param("viewCount") Long viewCount,
-            @Param("rentCount") Long rentCount,
             @Param("minAge") Integer minAge,
             @Param("maxAge") Integer maxAge,
             @Param("username") String username,
-            @Param("status") Integer status
+            @Param("status") Integer status,
+            @Param("viewCount") Long viewCount,
+            @Param("rentCount") Long rentCount,
+            @Param("viewCountOrder") Integer viewCountOrder,
+            @Param("rentCountOrder") Integer rentCountOrder
     );
+
+
+
 
 
 
