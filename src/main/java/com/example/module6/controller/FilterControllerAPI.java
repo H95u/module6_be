@@ -15,13 +15,13 @@ import java.util.List;
 @CrossOrigin("*")
 @RequestMapping("/api/filter")
 public class FilterControllerAPI {
-//    @Autowired
-//    private FilterService filterService;
-//
-//    @GetMapping
-//    public ResponseEntity<List<User>> findAvailableUser(@RequestBody FilterDTO filterDTO) {
-//        return new ResponseEntity<>(filterService.filter(filterDTO), HttpStatus.OK);
-//    }
+    @Autowired
+    private FilterService filterService;
+
+    @PostMapping
+    public ResponseEntity<List<User>> findAvailableUser(@RequestBody FilterDTO filterDTO) {
+        return new ResponseEntity<>(filterService.filter(filterDTO), HttpStatus.OK);
+    }
 //
 //    @Autowired
 //    private UserService userService;

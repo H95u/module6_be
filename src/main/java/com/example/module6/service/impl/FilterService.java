@@ -13,14 +13,16 @@ public class FilterService {
     @Autowired
     private IFilterRepository iFilterRepository;
 
-//    public List<User> filter(FilterDTO filterDTO) {
-//        return iFilterRepository.filterByAll(
-//                filterDTO.getGender(),
-//                filterDTO.getAddressId(),
-//                filterDTO.getAgeRange().get(0),
-//                filterDTO.getAgeRange().get(1),
-//                filterDTO.getUsername()
-//        );
-//    }
+    public List<User> filter(FilterDTO filterDTO) {
+        return iFilterRepository.searchWithFilter(
+                filterDTO.getGender(),
+                filterDTO.getAddressId(),
+                filterDTO.getUsername(),
+                filterDTO.getAgeRange().get(0),
+                filterDTO.getAgeRange().get(1),
+                filterDTO.getViewCount(),
+                filterDTO.getRentCount()
+        );
+    }
 
 }
