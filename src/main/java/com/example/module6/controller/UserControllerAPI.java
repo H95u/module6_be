@@ -85,8 +85,17 @@ public class UserControllerAPI {
             userService.save(userOptional.get());
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
+    }
 
-
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id,
+                                    @RequestBody User user) {
+        Optional<User> userOptional = userService.findOne(id);
+        if (userOptional.isPresent()) {
+            user.setId(id);
+            userService.save(user);
+        }
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/search")
