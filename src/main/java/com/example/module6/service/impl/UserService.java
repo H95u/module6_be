@@ -86,4 +86,10 @@ public class UserService implements UserDetailsService, IUserService {
     public List<User> searchByUsername(String username) {
         return iUserRepository.searchByUsername(username);
     }
+
+    public List<User> findByCriteria(Integer gender, Long addressId, Long viewCount, Long rentCount,
+                                     Integer minAge, Integer maxAge, String username, Integer status) {
+        return iUserRepository.findByCriteria(gender, addressId, viewCount, rentCount,
+                minAge, maxAge, username, status);
+    }
 }

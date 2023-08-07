@@ -96,7 +96,6 @@ public class UserControllerAPI {
         return new ResponseEntity<>(tours, HttpStatus.OK);
     }
 
-
 }
 
 
