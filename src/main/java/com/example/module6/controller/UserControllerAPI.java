@@ -95,35 +95,6 @@ public class UserControllerAPI {
         return new ResponseEntity<>(tours, HttpStatus.OK);
     }
 
-    @Autowired
-    private IUserRepository userRepository;
-
-    @GetMapping("/filter")
-    public List<User> getUsers(
-            @RequestParam(name = "gender", required = false) Integer gender,
-            @RequestParam(name = "address", required = false) Long addressId,
-            @RequestParam(name = "viewCount", required = false) Long viewCount,
-            @RequestParam(name = "rentCount", required = false) Long rentCount,
-            @RequestParam(name = "minAge", required = false) Integer minAge,
-            @RequestParam(name = "maxAge", required = false) Integer maxAge,
-            @RequestParam(name = "username", required = false) String username
-    ) {
-        if (gender == null || addressId == null || viewCount == null || rentCount == null || minAge == null || maxAge == null || username == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Vui lòng nhập đầy đủ các trường tìm kiếm.");
-        }
-
-        List<User> users = userRepository.findAllByGenderAndAddressIdAndViewCountAndRentCountAndAgeBetweenAndUsernameContainingIgnoreCase(
-                gender,
-                addressId,
-                viewCount,
-                rentCount,
-                minAge,
-                maxAge,
-                username
-        );
-
-        return users;
-    }
 
 }
 
