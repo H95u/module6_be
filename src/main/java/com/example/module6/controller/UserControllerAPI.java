@@ -65,17 +65,19 @@ public class UserControllerAPI {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("/add-options")
-    public ResponseEntity<?> addOptionToUser(@RequestBody CreateOptionRequest createOptionRequest) {
-        Long userId = 1L; // TODO: get userId from token
-        List<Options> options = userService.addOptionToUser(userId, createOptionRequest.getOptionIds());
+    @PostMapping("/add-options/{id}")
+    public ResponseEntity<?> addOptionToUser(@PathVariable Long id,
+                                             @RequestBody CreateOptionRequest createOptionRequest) {
+//        Long userId = 1L; // TODO: get userId from token
+        List<Options> options = userService.addOptionToUser(id, createOptionRequest.getOptionIds());
         return new ResponseEntity<>(options, HttpStatus.CREATED);
     }
 
-    @PostMapping("/update-price")
-    public ResponseEntity<?> updatePriceByUserId(@RequestBody UpdatePriceRequest updatePriceRequest) {
-        Long userId = 1L;
-        Optional<User> userOptional = userService.findOne(userId);
+    @PostMapping("/update-price/{id}")
+    public ResponseEntity<?> updatePriceByUserId(@PathVariable Long id,
+                                                 @RequestBody UpdatePriceRequest updatePriceRequest) {
+//        Long userId = 1L;
+        Optional<User> userOptional = userService.findOne(id);
         if (!userOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {

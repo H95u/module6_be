@@ -14,14 +14,14 @@ public class FilterService {
     private IFilterRepository iFilterRepository;
 
     public List<User> filter(FilterDTO filterDTO) {
-        return iFilterRepository.findAllByGenderAndAddressIdAndViewCountAndRentCountAndAgeBetweenAndUsernameContainingIgnoreCase(
+        return iFilterRepository.searchWithFilter(
                 filterDTO.getGender(),
                 filterDTO.getAddressId(),
-                filterDTO.getViewCount(),
-                filterDTO.getRentCount(),
+                filterDTO.getUsername(),
                 filterDTO.getAgeRange().get(0),
                 filterDTO.getAgeRange().get(1),
-                filterDTO.getUsername()
+                filterDTO.getViewCount(),
+                filterDTO.getRentCount()
         );
     }
 
