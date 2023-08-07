@@ -27,9 +27,6 @@ public class BookingController {
         }
         return null;
     }
-
-
-
     @PutMapping("/accept/{bookingId}")
     public Booking acceptBooking(@PathVariable Long bookingId) {
         return bookingService.acceptBooking(bookingId);
