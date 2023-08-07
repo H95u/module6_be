@@ -26,4 +26,16 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "SELECT u FROM User u WHERE u.username LIKE %:username%")
     List<User> searchByUsername(@Param("username") String username);
+
+    List<User> findAllByGenderAndAddressIdAndViewCountAndRentCountAndAgeBetweenAndUsernameContainingIgnoreCase(
+            Integer gender,
+            Long addressId,
+            Long viewCount,
+            Long rentCount,
+            Integer minAge,
+            Integer maxAge,
+            String username
+    );
+
+
 }
