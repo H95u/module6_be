@@ -3,6 +3,7 @@ package com.example.module6.controller;
 import com.example.module6.model.DTO.ImageDTO;
 import com.example.module6.model.Options;
 import com.example.module6.model.User;
+import com.example.module6.repository.IUserRepository;
 import com.example.module6.request.CreateOptionRequest;
 import com.example.module6.request.UpdatePriceRequest;
 import com.example.module6.service.impl.UserService;
