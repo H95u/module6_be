@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
@@ -89,7 +91,6 @@ public class UserControllerAPI {
     @PostMapping("/update-statusPartner/{id}")
     public ResponseEntity<?> updatePriceByUserId(@PathVariable Long id,
                                                  @RequestBody UpdateStatusRequest updateStatusRequest) {
-//        Long userId = 1L;
         Optional<User> userOptional = userService.findOne(id);
         if (!userOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -99,6 +100,27 @@ public class UserControllerAPI {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id,
+                                    @RequestBody User updatedUser) {
+        Optional<User> userOptional = userService.findOne(id);
+        if (userOptional.isPresent()) {
+            User existingUser = userOptional.get();
+            existingUser.setNickname(updatedUser.getNickname());
+            existingUser.setEmail(updatedUser.getEmail());
+            existingUser.setDob(updatedUser.getDob());
+            LocalDate nowDate = LocalDate.now();
+            LocalDate dob = updatedUser.getDob();
+            Period period = Period.between(dob, nowDate);
+            int age = period.getYears();
+            existingUser.setAge(age);
+            existingUser.setAddress(updatedUser.getAddress());
+            existingUser.setGender(updatedUser.getGender());
+            userService.save(existingUser);
+        }
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
 
     @GetMapping("/search")
     public ResponseEntity<List<User>> searchByTitle(@RequestParam(required = false, defaultValue = "") String username) {
