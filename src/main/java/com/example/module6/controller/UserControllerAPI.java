@@ -90,14 +90,14 @@ public class UserControllerAPI {
 
     @PostMapping("/update-statusPartner/{id}")
     public ResponseEntity<?> updatePriceByUserId(@PathVariable Long id,
-                                                 @RequestBody UpdateStatusRequest updateStatusRequest) {
+                                                 @RequestParam Integer status) {
         Optional<User> userOptional = userService.findOne(id);
         if (!userOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            userOptional.get().setStatus(updateStatusRequest.getStatus());
+            userOptional.get().setStatus(status);
             userService.save(userOptional.get());
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(userOptional.get(), HttpStatus.ACCEPTED);
         }
     }
     @PutMapping("/{id}")
