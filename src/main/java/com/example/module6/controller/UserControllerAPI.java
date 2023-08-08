@@ -87,7 +87,7 @@ public class UserControllerAPI {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable Long id,
                                     @RequestBody User user) {
         Optional<User> userOptional = userService.findOne(id);
