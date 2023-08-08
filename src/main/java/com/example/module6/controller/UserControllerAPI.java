@@ -3,15 +3,14 @@ package com.example.module6.controller;
 import com.example.module6.model.DTO.ImageDTO;
 import com.example.module6.model.Options;
 import com.example.module6.model.User;
-import com.example.module6.repository.IUserRepository;
 import com.example.module6.request.CreateOptionRequest;
 import com.example.module6.request.UpdatePriceRequest;
+import com.example.module6.request.UpdateStatusRequest;
 import com.example.module6.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -85,8 +84,20 @@ public class UserControllerAPI {
             userService.save(userOptional.get());
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
+    }
 
-
+    @PostMapping("/update-statusPartner/{id}")
+    public ResponseEntity<?> updatePriceByUserId(@PathVariable Long id,
+                                                 @RequestBody UpdateStatusRequest updateStatusRequest) {
+//        Long userId = 1L;
+        Optional<User> userOptional = userService.findOne(id);
+        if (!userOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            userOptional.get().setStatus(updateStatusRequest.getStatus());
+            userService.save(userOptional.get());
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        }
     }
 
     @GetMapping("/search")
