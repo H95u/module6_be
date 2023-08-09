@@ -7,6 +7,8 @@ import com.example.module6.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/api/bookings")
@@ -16,6 +18,11 @@ public class BookingController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping("/booked/{bookedUserId}")
+    public List<Booking> getBookingsByBookedUserId(@PathVariable Long bookedUserId){
+        return bookingService.getBookingsByBookedUserId(bookedUserId);
+    }
 
     @PostMapping("/rent")
     public Booking rentService(@RequestBody Booking booking) {
