@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class UpdateUserRequest {
     private String nickname;
     private String email;
-//    private LocalDate dob;
+    private LocalDate dob;
     private Long addressId;
     private Integer gender;
 }
