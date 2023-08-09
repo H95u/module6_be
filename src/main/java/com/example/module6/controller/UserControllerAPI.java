@@ -6,6 +6,8 @@ import com.example.module6.model.User;
 import com.example.module6.request.CreateOptionRequest;
 import com.example.module6.request.UpdatePriceRequest;
 import com.example.module6.request.UpdateStatusRequest;
+import com.example.module6.request.UpdateUserRequest;
+import com.example.module6.service.impl.AddressService;
 import com.example.module6.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,8 @@ import java.util.Optional;
 public class UserControllerAPI {
     @Autowired
     private UserService userService;
+    @Autowired
+    private AddressService addressService;
 
     @GetMapping
     public ResponseEntity<List<User>> findAvailableUser() {
@@ -102,7 +106,7 @@ public class UserControllerAPI {
     }
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id,
-                                    @RequestBody User updatedUser) {
+                                    @RequestBody UpdateUserRequest updatedUser) {
         Optional<User> userOptional = userService.findOne(id);
         if (userOptional.isPresent()) {
             User existingUser = userOptional.get();
@@ -114,11 +118,12 @@ public class UserControllerAPI {
             Period period = Period.between(dob, nowDate);
             int age = period.getYears();
             existingUser.setAge(age);
-            existingUser.setAddress(updatedUser.getAddress());
+            existingUser.setAddress(addressService.findById(id));
             existingUser.setGender(updatedUser.getGender());
             userService.save(existingUser);
+            return new ResponseEntity<>(existingUser, HttpStatus.ACCEPTED);
         }
-        return new ResponseEntity<>(userOptional.get(), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 
