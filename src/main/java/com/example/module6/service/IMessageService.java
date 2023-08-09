@@ -1,6 +1,4 @@
 package com.example.module6.service;
-
-import com.example.module6.model.Chat;
 import com.example.module6.model.Message;
 
 import java.util.List;
