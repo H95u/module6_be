@@ -18,6 +18,11 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;
 
+    @GetMapping("/booked/{bookedUserId}")
+    public List<Booking> getBookingsByBookedUserId(@PathVariable Long bookedUserId){
+        return bookingService.getBookingsByBookedUserId(bookedUserId);
+    }
+
     @PostMapping("/rent")
     public ResponseEntity<Booking> rentService(@RequestBody Booking booking) {
         booking.setStatus(1);

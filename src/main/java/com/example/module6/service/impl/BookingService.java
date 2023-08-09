@@ -5,6 +5,8 @@ import com.example.module6.repository.IBookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BookingService {
     @Autowired
@@ -30,6 +32,10 @@ public class BookingService {
             return iBookingRepository.save(booking);
         }
         return null;
+    }
+
+    public List<Booking> getBookingsByBookedUserId(Long bookedUserId){
+        return iBookingRepository.findByBookedUserId(bookedUserId);
     }
 
 }
