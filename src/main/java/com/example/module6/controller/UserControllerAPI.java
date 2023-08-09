@@ -118,7 +118,7 @@ public class UserControllerAPI {
             existingUser.setGender(updatedUser.getGender());
             userService.save(existingUser);
         }
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(userOptional.get(), HttpStatus.ACCEPTED);
     }
 
 
