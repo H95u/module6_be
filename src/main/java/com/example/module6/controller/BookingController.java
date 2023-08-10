@@ -22,6 +22,11 @@ public class BookingController {
         return bookingService.getBookingsByBookedUserId(bookedUserId);
     }
 
+    @GetMapping("/booking-users/{bookingUserId}")
+    public List<Booking> getBookingsByBookingUserId(@PathVariable Long bookingUserId) {
+        return bookingService.getBookingsByBookingUserId(bookingUserId);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Booking> findOne(@PathVariable Long id) {
         Optional<Booking> bookingOptional = bookingService.findById(id);
