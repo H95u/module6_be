@@ -7,26 +7,21 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-public class Booking {
+public class Feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime startTime;
-
-    private LocalDateTime endTime;
-
-    private int status;
+    @ManyToOne
+    private User sender;
 
     @ManyToOne
-    private Options option;
+    private User receiver;
 
-    @ManyToOne
-    private User bookingUser;
+    private String message;
 
-    @ManyToOne
-    private User bookedUser;
+    private int rating;
 
-    private Double total;
+    private LocalDateTime presentTime;
 
 }
