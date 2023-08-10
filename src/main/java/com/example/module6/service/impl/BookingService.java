@@ -38,6 +38,10 @@ public class BookingService {
     public List<Booking> getBookingsByBookedUserId(Long bookedUserId){
         return iBookingRepository.findByBookedUserId(bookedUserId);
     }
+
+    public List<Booking> getBookingsByBookingUserId(Long bookingUserId){
+        return iBookingRepository.findAllByBookingUser_Id(bookingUserId);
+    }
     public Optional<Booking> findById(Long id) {
         return iBookingRepository.findById(id);
     }
