@@ -8,7 +8,7 @@ import java.util.List;
 public class FilterDTO {
     private Integer gender;
     private Long addressId;
-    private Long viewCount;
+    private Integer sortPrice;
     private Long rentCount;
     private List<Integer> ageRange;
     private String username;

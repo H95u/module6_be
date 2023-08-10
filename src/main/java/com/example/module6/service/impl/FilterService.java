@@ -20,8 +20,7 @@ public class FilterService {
                 filterDTO.getUsername(),
                 filterDTO.getAgeRange().get(0),
                 filterDTO.getAgeRange().get(1),
-                filterDTO.getViewCount(),
-                filterDTO.getRentCount()
+                filterDTO.getSortPrice()
         );
     }
 

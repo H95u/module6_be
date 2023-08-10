@@ -16,16 +16,15 @@ public interface IFilterRepository extends JpaRepository<User, Long> {
             "AND (:name IS NULL OR u.username LIKE %:name%) " +
             "AND (u.age BETWEEN :minAge AND :maxAge) " +
             "AND u.status = 1 " +
-            "ORDER BY CASE WHEN :viewCount = 1 THEN u.viewCount END ASC, " +
-            "CASE WHEN :viewCount = 0 THEN u.viewCount END DESC, " +
-            "CASE WHEN :rentCount = 1 THEN u.rentCount END ASC, " +
-            "CASE WHEN :rentCount = 0 THEN u.rentCount END DESC")
+            "ORDER BY CASE WHEN :sortPrice = 1 THEN u.price END ASC, " +
+            "CASE WHEN :sortPrice = 0 THEN u.price END DESC, " +
+            "u.price ASC")
     List<User> searchWithFilter(@Param("gender") Integer gender,
                                 @Param("address") Long address,
                                 @Param("name") String name,
                                 @Param("minAge") Integer minAge,
                                 @Param("maxAge") Integer maxAge,
-                                @Param("viewCount") Long viewCount,
-                                @Param("rentCount") Long rentCount);
+                                @Param("sortPrice") Integer sortPrice);
+
     List<User> findAllByOptionsId(Long optionId);
 }
