@@ -1,28 +1,17 @@
 package com.example.module6.model;
-
 import java.time.LocalDateTime;
 
-public class UserBookingCountDTO {
+public class UserBookingEndTimeDTO {
     private Long bookedUserId;
-    private Long bookingCount;
     private User bookingUser;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
-
-    public UserBookingCountDTO(Long bookedUserId, Long bookingCount, User bookingUser, LocalDateTime startTime, LocalDateTime endTime) {
+    public UserBookingEndTimeDTO(Long bookedUserId, User bookingUser, LocalDateTime startTime, LocalDateTime endTime) {
         this.bookedUserId = bookedUserId;
-        this.bookingCount = bookingCount;
         this.bookingUser = bookingUser;
         this.startTime = startTime;
         this.endTime = endTime;
-    }
-
-
-    public UserBookingCountDTO(Long bookedUserId, Long bookingCount, User bookingUser) {
-        this.bookedUserId = bookedUserId;
-        this.bookingCount = bookingCount;
-        this.bookingUser = bookingUser;
     }
 
     public Long getBookedUserId() {
@@ -31,14 +20,6 @@ public class UserBookingCountDTO {
 
     public void setBookedUserId(Long bookedUserId) {
         this.bookedUserId = bookedUserId;
-    }
-
-    public Long getBookingCount() {
-        return bookingCount;
-    }
-
-    public void setBookingCount(Long bookingCount) {
-        this.bookingCount = bookingCount;
     }
 
     public User getBookingUser() {
@@ -64,5 +45,4 @@ public class UserBookingCountDTO {
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
-
 }
