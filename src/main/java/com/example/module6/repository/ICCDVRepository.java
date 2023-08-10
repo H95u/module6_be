@@ -18,11 +18,11 @@ public interface ICCDVRepository extends JpaRepository<User, Long> {
 //            "ORDER BY COUNT(b) DESC")
 //    List<UserBookingDTO> findTop3Renters(@Param("ccdvId") Long ccdvId);
 
-    @Query("SELECT NEW com.example.module6.model.UserBookingCountDTO(COUNT(b), b.bookingUser) " +
+    @Query("SELECT NEW com.example.module6.model.UserBookingDTO(COUNT(b.bookingUser), b.bookingUser) " +
             "FROM Booking b " +
             "WHERE b.bookedUser.id = :ccdvId " +
             "GROUP BY b.bookingUser " +
-            "ORDER BY COUNT(b) DESC")
+            "ORDER BY COUNT(b.bookingUser) DESC")
     List<UserBookingDTO> findTop3Renters(@Param("ccdvId") Long ccdvId);
 
 
