@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookingService {
@@ -36,6 +37,9 @@ public class BookingService {
 
     public List<Booking> getBookingsByBookedUserId(Long bookedUserId){
         return iBookingRepository.findByBookedUserId(bookedUserId);
+    }
+    public Optional<Booking> findById(Long id) {
+        return iBookingRepository.findById(id);
     }
 
 }

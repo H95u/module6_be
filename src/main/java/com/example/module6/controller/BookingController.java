@@ -1,17 +1,14 @@
 package com.example.module6.controller;
 
 import com.example.module6.model.Booking;
-import com.example.module6.model.User;
 import com.example.module6.service.impl.BookingService;
-import com.example.module6.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -23,6 +20,16 @@ public class BookingController {
     @GetMapping("/booked/{bookedUserId}")
     public List<Booking> getBookingsByBookedUserId(@PathVariable Long bookedUserId) {
         return bookingService.getBookingsByBookedUserId(bookedUserId);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Booking> findOne(@PathVariable Long id) {
+        Optional<Booking> bookingOptional = bookingService.findById(id);
+        if (bookingOptional.isPresent()) {
+            return new ResponseEntity<>(bookingOptional.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 
     @PostMapping("/rent")
