@@ -13,7 +13,7 @@ public class BookingService {
     @Autowired
     private IBookingRepository iBookingRepository;
 
-    public Booking rentService (Booking booking) {
+    public Booking rentService(Booking booking) {
         return iBookingRepository.save(booking);
     }
 
@@ -35,13 +35,19 @@ public class BookingService {
         return null;
     }
 
-    public List<Booking> getBookingsByBookedUserId(Long bookedUserId){
+    public List<Booking> getBookingsByBookedUserId(Long bookedUserId) {
         return iBookingRepository.findByBookedUserId(bookedUserId);
     }
 
-    public List<Booking> getBookingsByBookingUserId(Long bookingUserId){
+    public List<Booking> getBookingsByBookedUserIdAndAccepted(Long bookedUserId) {
+        return iBookingRepository.findByBookedUserIdAndStatus(bookedUserId, 2);
+    }
+
+
+    public List<Booking> getBookingsByBookingUserId(Long bookingUserId) {
         return iBookingRepository.findAllByBookingUser_Id(bookingUserId);
     }
+
     public Optional<Booking> findById(Long id) {
         return iBookingRepository.findById(id);
     }

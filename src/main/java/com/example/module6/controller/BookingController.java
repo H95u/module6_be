@@ -68,7 +68,7 @@ public class BookingController {
 
     private Booking getOverlappingBookings(LocalDateTime newStartTime, LocalDateTime newEndTime, Long bookedId) {
         Booking overlappingBookings = null;
-        List<Booking> existingBookings = bookingService.getBookingsByBookedUserId(bookedId);
+        List<Booking> existingBookings = bookingService.getBookingsByBookedUserIdAndAccepted(bookedId);
 
         for (Booking existingBooking : existingBookings) {
             LocalDateTime existingStartTime = existingBooking.getStartTime();
