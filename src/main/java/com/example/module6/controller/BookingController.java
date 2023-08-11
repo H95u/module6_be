@@ -63,7 +63,7 @@ public class BookingController {
 
     @PutMapping("/reject/{bookingId}")
     public ResponseEntity<Booking> rejectBooking(@PathVariable Long bookingId) {
-        return new ResponseEntity<>(bookingService.acceptBooking(bookingId), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(bookingService.rejectBooking(bookingId), HttpStatus.ACCEPTED);
     }
 
     private Booking getOverlappingBookings(LocalDateTime newStartTime, LocalDateTime newEndTime, Long bookedId) {
