@@ -84,4 +84,17 @@ public class BookingController {
         return overlappingBookings;
     }
 
+    @PostMapping("/update-statusBooking/{id}")
+    public ResponseEntity<?> updateStatusByBookingId(@PathVariable Long id,
+                                                 @RequestParam Integer status) {
+        Optional<Booking> bookingOptional = bookingService.findById(id);
+        if (!bookingOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            bookingOptional.get().setStatus(status);
+            bookingService.rentService(bookingOptional.get());
+            return new ResponseEntity<>(bookingOptional.get(), HttpStatus.ACCEPTED);
+        }
+    }
+
 }
