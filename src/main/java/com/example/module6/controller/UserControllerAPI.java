@@ -118,7 +118,7 @@ public class UserControllerAPI {
             Period period = Period.between(dob, nowDate);
             int age = period.getYears();
             existingUser.setAge(age);
-            existingUser.setAddress(addressService.findById(id));
+            existingUser.setAddress(addressService.findById(updatedUser.getAddressId()));
             existingUser.setGender(updatedUser.getGender());
             userService.save(existingUser);
             return new ResponseEntity<>(existingUser, HttpStatus.ACCEPTED);
