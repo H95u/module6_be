@@ -1,11 +1,14 @@
 package com.example.module6.controller;
 
 import com.example.module6.model.Booking;
+import com.example.module6.model.User;
 import com.example.module6.service.impl.BookingService;
+import com.example.module6.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +19,8 @@ import java.util.Optional;
 public class BookingController {
     @Autowired
     private BookingService bookingService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/booked/{bookedUserId}")
     public List<Booking> getBookingsByBookedUserId(@PathVariable Long bookedUserId) {
@@ -51,6 +56,16 @@ public class BookingController {
         if (overlappingBookings != null) {
             return new ResponseEntity<>(overlappingBookings, HttpStatus.NOT_ACCEPTABLE);
         }
+        return bookingSuccess(booking);
+    }
+
+    private ResponseEntity<Booking> bookingSuccess(Booking booking) {
+        User bookingUser = userService.findOne(booking.getBookingUser().getId()).get();
+        User bookedUser = userService.findOne(booking.getBookedUser().getId()).get();
+        bookingUser.setMoney(bookingUser.getMoney() - booking.getTotal());
+        bookedUser.setMoney(bookedUser.getMoney() + booking.getTotal());
+        userService.save(bookingUser);
+        userService.save(bookedUser);
         booking.setStatus(1);
         return new ResponseEntity<>(bookingService.rentService(booking), HttpStatus.ACCEPTED);
     }
@@ -86,7 +101,7 @@ public class BookingController {
 
     @PostMapping("/update-statusBooking/{id}")
     public ResponseEntity<?> updateStatusByBookingId(@PathVariable Long id,
-                                                 @RequestParam Integer status) {
+                                                     @RequestParam Integer status) {
         Optional<Booking> bookingOptional = bookingService.findById(id);
         if (!bookingOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
