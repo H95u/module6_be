@@ -25,11 +25,19 @@ public class BookingService {
         }
         return null;
     }
+    public Booking finishBooking(Long bookingId) {
+        Booking booking = iBookingRepository.findById(bookingId).orElse(null);
+        if (booking != null) {
+            booking.setStatus(3);
+            return iBookingRepository.save(booking);
+        }
+        return null;
+    }
 
     public Booking rejectBooking(Long bookingId) {
         Booking booking = iBookingRepository.findById(bookingId).orElse(null);
         if (booking != null) {
-            booking.setStatus(3);
+            booking.setStatus(4);
             return iBookingRepository.save(booking);
         }
         return null;

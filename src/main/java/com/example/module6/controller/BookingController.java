@@ -75,6 +75,10 @@ public class BookingController {
     public ResponseEntity<Booking> acceptBooking(@PathVariable Long bookingId) {
         return new ResponseEntity<>(bookingService.acceptBooking(bookingId), HttpStatus.ACCEPTED);
     }
+    @PutMapping("/{bookingId}/finish")
+    public ResponseEntity<Booking> finishBooking(@PathVariable Long bookingId) {
+        return new ResponseEntity<>(bookingService.finishBooking(bookingId), HttpStatus.ACCEPTED);
+    }
 
     @PutMapping("/reject/{bookingId}")
     public ResponseEntity<Booking> rejectBooking(@PathVariable Long bookingId) {
