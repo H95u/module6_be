@@ -38,11 +38,17 @@ public class UserControllerAPI {
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/sort-by-view-count-desc")
+    public ResponseEntity<List<User>> findAllViewCountDesc() {
+        return new ResponseEntity<>(userService.findAllViewCountDesc(), HttpStatus.OK);
+    }
 
     @GetMapping("{id}")
     public ResponseEntity<?> findOne(@PathVariable Long id) {
         Optional<User> userOptional = userService.findOne(id);
         if (userOptional.isPresent()) {
+            userOptional.get().setViewCount(userOptional.get().getViewCount() + 1);
+            userService.save(userOptional.get());
             return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -104,6 +110,7 @@ public class UserControllerAPI {
             return new ResponseEntity<>(userOptional.get(), HttpStatus.ACCEPTED);
         }
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id,
                                     @RequestBody UpdateUserRequest updatedUser) {

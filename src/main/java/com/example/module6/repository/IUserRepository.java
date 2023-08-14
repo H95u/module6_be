@@ -13,6 +13,8 @@ import java.util.List;
 public interface IUserRepository extends JpaRepository<User, Long> {
     User findAllByUsername(String username);
 
+    List<User> findAllByOrderByViewCountDesc();
+
     @Query(value = "select * from lover_module6.user where status = 1", nativeQuery = true)
     List<User> findAvailableUser();
 
@@ -24,7 +26,7 @@ public interface IUserRepository extends JpaRepository<User, Long> {
     @Query(value = "DELETE FROM lover_module6.user_options WHERE user_id = :userId", nativeQuery = true)
     void deleteUserOptionByUserId(@Param("userId") Long userId);
 
-    @Query(value = "SELECT u FROM User u WHERE u.username LIKE %:username%")
+    @Query(value = "SELECT u FROM User u WHERE u.username LIKE %:username% and u.status = 1 ")
     List<User> searchByUsername(@Param("username") String username);
 
     @Query("SELECT u FROM User u " +
@@ -52,10 +54,6 @@ public interface IUserRepository extends JpaRepository<User, Long> {
             @Param("viewCountOrder") Integer viewCountOrder,
             @Param("rentCountOrder") Integer rentCountOrder
     );
-
-
-
-
 
 
 }
