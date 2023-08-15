@@ -31,10 +31,7 @@ public class BookingService {
     public Booking finishBookingUser(Long bookingId) {
         Booking booking = iBookingRepository.findById(bookingId).orElse(null);
         if (booking != null) {
-            User bookingUser = userService.findOne(booking.getBookingUser().getId()).get();
             booking.setStatus(3);
-            bookingUser.setMoney(bookingUser.getMoney() - booking.getTotal());
-            userService.save(bookingUser);
             return iBookingRepository.save(booking);
         }
         return null;
@@ -44,7 +41,7 @@ public class BookingService {
         Booking booking = iBookingRepository.findById(bookingId).orElse(null);
         if (booking != null) {
             User bookedUser = userService.findOne(booking.getBookedUser().getId()).get();
-            booking.setStatus(0);
+            booking.setStatus(5);
             bookedUser.setMoney(bookedUser.getMoney() + booking.getTotal());
             userService.save(bookedUser);
             return iBookingRepository.save(booking);
@@ -55,6 +52,9 @@ public class BookingService {
     public Booking rejectBooking(Long bookingId) {
         Booking booking = iBookingRepository.findById(bookingId).orElse(null);
         if (booking != null) {
+            User bookingUser = userService.findOne(booking.getBookingUser().getId()).get();
+            bookingUser.setMoney(bookingUser.getMoney() + booking.getTotal());
+            userService.save(bookingUser);
             booking.setStatus(4);
             return iBookingRepository.save(booking);
         }
