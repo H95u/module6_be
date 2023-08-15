@@ -2,6 +2,7 @@ package com.example.module6.controller;
 
 import com.example.module6.model.Booking;
 import com.example.module6.model.User;
+import com.example.module6.service.impl.PayPalService;
 import com.example.module6.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,8 @@ public class PaypalControllerAPI {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private PayPalService payPalService;
 
     @PostMapping("/deposit/{id}")
     public ResponseEntity<?> depositMoney(@PathVariable Long id,
@@ -28,6 +31,16 @@ public class PaypalControllerAPI {
             userService.save(user.get());
         }
         return new ResponseEntity<>(user.get(), HttpStatus.OK);
+    }
+
+    @PostMapping("/withdraw/{id}")
+    public ResponseEntity<String> withdrawFromPayPal(@PathVariable Long id,
+                                                     @RequestParam Double amount) {
+        if (payPalService.withdrawFromPayPal(amount)) {
+            return ResponseEntity.ok("Withdrawal from PayPal successful.");
+        } else {
+            return ResponseEntity.badRequest().body("Withdrawal from PayPal failed.");
+        }
     }
 
 }
