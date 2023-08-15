@@ -1,6 +1,5 @@
 package com.example.module6.model;
 
-import com.example.module6.chat.MessageType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

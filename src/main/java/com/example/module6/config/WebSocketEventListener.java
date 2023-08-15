@@ -1,4 +1,4 @@
-package com.example.module6.chat;
+package com.example.module6.config;
 
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
@@ -13,13 +13,13 @@ public class WebSocketEventListener {
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
 //        String username = accessor.getUser().getName();
-        System.out.println("User connected: ");
+        System.out.println("Đã kết nối: ");
     }
 
     @EventListener
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
 //        String username = accessor.getUser().getName();
-        System.out.println("User disconnected: ");
+        System.out.println("Ngắt kết nối: ");
     }
 }
