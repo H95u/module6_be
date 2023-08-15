@@ -60,12 +60,12 @@ public class BookingController {
     }
 
     private ResponseEntity<Booking> bookingSuccess(Booking booking) {
-        User bookingUser = userService.findOne(booking.getBookingUser().getId()).get();
-        User bookedUser = userService.findOne(booking.getBookedUser().getId()).get();
-        bookingUser.setMoney(bookingUser.getMoney() - booking.getTotal());
-        bookedUser.setMoney(bookedUser.getMoney() + booking.getTotal());
-        userService.save(bookingUser);
-        userService.save(bookedUser);
+//        User bookingUser = userService.findOne(booking.getBookingUser().getId()).get();
+//        User bookedUser = userService.findOne(booking.getBookedUser().getId()).get();
+//        bookingUser.setMoney(bookingUser.getMoney() - booking.getTotal());
+//        bookedUser.setMoney(bookedUser.getMoney() + booking.getTotal());
+//        userService.save(bookingUser);
+//        userService.save(bookedUser);
         booking.setStatus(1);
         return new ResponseEntity<>(bookingService.rentService(booking), HttpStatus.ACCEPTED);
     }
@@ -75,9 +75,13 @@ public class BookingController {
     public ResponseEntity<Booking> acceptBooking(@PathVariable Long bookingId) {
         return new ResponseEntity<>(bookingService.acceptBooking(bookingId), HttpStatus.ACCEPTED);
     }
-    @PutMapping("/{bookingId}/finish")
-    public ResponseEntity<Booking> finishBooking(@PathVariable Long bookingId) {
-        return new ResponseEntity<>(bookingService.finishBooking(bookingId), HttpStatus.ACCEPTED);
+    @PutMapping("/{bookingId}/finish-user")
+    public ResponseEntity<Booking> finishBookingUser(@PathVariable Long bookingId) {
+        return new ResponseEntity<>(bookingService.finishBookingUser(bookingId), HttpStatus.ACCEPTED);
+    }
+    @PutMapping("/{bookingId}/finish-partner")
+    public ResponseEntity<Booking> finishBookedUser(@PathVariable Long bookingId) {
+        return new ResponseEntity<>(bookingService.finishBookedUser(bookingId), HttpStatus.ACCEPTED);
     }
 
     @PutMapping("/reject/{bookingId}")
