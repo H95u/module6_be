@@ -1,12 +1,14 @@
 package com.example.module6.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +23,5 @@ public class Message {
 
     @ManyToOne
     private User receiver;
+
 }

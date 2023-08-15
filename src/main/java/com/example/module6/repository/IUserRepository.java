@@ -52,10 +52,4 @@ public interface IUserRepository extends JpaRepository<User, Long> {
             @Param("viewCountOrder") Integer viewCountOrder,
             @Param("rentCountOrder") Integer rentCountOrder
     );
-
-
-
-
-
-
 }
