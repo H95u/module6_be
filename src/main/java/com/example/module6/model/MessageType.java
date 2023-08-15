@@ -1,8 +1,8 @@
-package com.example.module6.chat;
+package com.example.module6.model;
 
 public enum MessageType {
 
-    CHAT,
     JOIN,
+    CHAT,
     LEAVE
 }

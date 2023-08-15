@@ -39,4 +39,9 @@ public class MessageService implements IMessageService {
     public List<Message> findMessageByReceiverId(Long receiverId) {
         return iMessageRepository.findMessageByReceiverId(receiverId);
     }
+
+    @Override
+    public Message saveMessage(Message message) {
+        return iMessageRepository.save(message);
+    }
 }
