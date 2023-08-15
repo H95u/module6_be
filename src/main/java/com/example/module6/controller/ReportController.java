@@ -30,7 +30,7 @@ public class ReportController {
     public ResponseEntity<?> create(@RequestBody CreateReportRequest createReportRequest) {
         Report report = new Report();
         User bookingUser = userService.findOne(createReportRequest.getBookingUserId()).orElse(null);
-        User bookedUser = userService.findOne(createReportRequest.getBookingUserId()).orElse(null);
+        User bookedUser = userService.findOne(createReportRequest.getBookedUserId()).orElse(null);
         report.setDescription(createReportRequest.getDescription());
         report.setBookingUser(bookingUser);
         report.setBookedUser(bookedUser);
