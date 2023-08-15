@@ -60,12 +60,12 @@ public class BookingController {
     }
 
     private ResponseEntity<Booking> bookingSuccess(Booking booking) {
-//        User bookingUser = userService.findOne(booking.getBookingUser().getId()).get();
-//        User bookedUser = userService.findOne(booking.getBookedUser().getId()).get();
-//        bookingUser.setMoney(bookingUser.getMoney() - booking.getTotal());
-//        bookedUser.setMoney(bookedUser.getMoney() + booking.getTotal());
-//        userService.save(bookingUser);
-//        userService.save(bookedUser);
+        User bookingUser = userService.findOne(booking.getBookingUser().getId()).get();
+        User bookedUser = userService.findOne(booking.getBookedUser().getId()).get();
+        bookingUser.setMoney(bookingUser.getMoney() - booking.getTotal());
+        bookedUser.setRentCount(bookedUser.getRentCount() + 1);
+        userService.save(bookingUser);
+        userService.save(bookedUser);
         booking.setStatus(1);
         return new ResponseEntity<>(bookingService.rentService(booking), HttpStatus.ACCEPTED);
     }

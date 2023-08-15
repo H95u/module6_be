@@ -29,4 +29,5 @@ public class Message {
     private User receiver;
 
     private MessageType type;
+
 }
