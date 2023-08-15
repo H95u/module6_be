@@ -28,5 +28,7 @@ public class Booking {
     private User bookedUser;
 
     private Double total;
+    @Column(columnDefinition = "longtext")
+    private String message;
 
 }
