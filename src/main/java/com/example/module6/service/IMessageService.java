@@ -5,4 +5,5 @@ import java.util.List;
 
 public interface IMessageService extends IGeneralService<Message,Long>{
     List<Message> findMessageByReceiverId(Long receiverId);
+    Message saveMessage(Message message);
 }
