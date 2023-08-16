@@ -7,17 +7,15 @@ import com.example.module6.repository.IBookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Service
 public class BookingService {
 
     @Autowired
     private IBookingRepository iBookingRepository;
-    @Autowired UserService userService;
+    @Autowired
+    UserService userService;
 
     public Booking rentService(Booking booking) {
         return iBookingRepository.save(booking);
@@ -31,6 +29,7 @@ public class BookingService {
         }
         return null;
     }
+
     public Booking finishBookingUser(Long bookingId) {
         Booking booking = iBookingRepository.findById(bookingId).orElse(null);
         if (booking != null) {
@@ -65,15 +64,9 @@ public class BookingService {
         }
         return null;
     }
-    public List<RevenueDTO> findAllTotalByBookedUserId(Long bookedUserId, Integer idYear) {
-        List<RevenueDTO> revenueDTOList = iBookingRepository.findAllTotalByBookedUserId(bookedUserId, idYear);
-        revenueDTOList.stream().collect(Collectors.toMap(RevenueDTO::getMonth, RevenueDTO::getTotal));
-        List<Double> moneyList = new ArrayList<>();
-        for (int i = 0; i < 12; i++) {
 
-        }
-
-        return null;
+    public List<RevenueDTO> findAllTotalByBookedUserId(Long bookedUserId, Integer iYear) {
+        return iBookingRepository.findAllTotalByBookedUserId(bookedUserId, iYear);
     }
 
     public List<Booking> getBookingsByBookedUserId(Long bookedUserId) {
