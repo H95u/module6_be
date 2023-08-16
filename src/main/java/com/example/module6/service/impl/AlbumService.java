@@ -18,12 +18,12 @@ public class AlbumService implements IAlbumService {
 
     @Override
     public List<Album> findAll() {
-        return null;
+        return iAlbumRepository.findAll();
     }
 
     @Override
     public Optional<Album> findOne(Long aLong) {
-        return Optional.empty();
+        return iAlbumRepository.findById(aLong);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class AlbumService implements IAlbumService {
 
     @Override
     public void delete(Long aLong) {
-
+        iAlbumRepository.deleteById(aLong);
     }
 
     public List<Album> finAllByUserId(Long userId) {

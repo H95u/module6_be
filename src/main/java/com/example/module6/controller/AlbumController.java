@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -26,7 +27,17 @@ public class AlbumController {
     public ResponseEntity<?> uploadAlbumImg(@RequestBody UploadAlbumDTO uploadAlbumDTO,
                                             @PathVariable Long id) {
         albumService.uploadAlbumImg(uploadAlbumDTO, id);
-        return new ResponseEntity<>(albumService.finAllByUserId(id),HttpStatus.OK);
+        return new ResponseEntity<>(albumService.finAllByUserId(id), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteAlbumImg(@PathVariable Long id) {
+        Optional<Album> album = albumService.findOne(id);
+        if (album.isPresent()) {
+            albumService.delete(id);
+            return new ResponseEntity<>(albumService.finAllByUserId(album.get().getUser().getId()), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 }
