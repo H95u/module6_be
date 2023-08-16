@@ -1,6 +1,7 @@
 package com.example.module6.controller;
 
 import com.example.module6.model.Booking;
+import com.example.module6.model.DTO.RevenueDTO;
 import com.example.module6.model.User;
 import com.example.module6.service.impl.BookingService;
 import com.example.module6.service.impl.UserService;
@@ -10,8 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin("*")
@@ -119,5 +120,22 @@ public class BookingController {
             return new ResponseEntity<>(bookingOptional.get(), HttpStatus.ACCEPTED);
         }
     }
+    @GetMapping("/revenue/{bookedUserId}")
+    public ResponseEntity<?> findAllTotalByBookedUserId(@PathVariable Long bookedUserId, @RequestParam Integer year) {
+        List<RevenueDTO> revenueDTOList = bookingService.findAllTotalByBookedUserId(bookedUserId, year);
+        if (revenueDTOList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            Map<Integer, Integer> totalMoneyMap = new HashMap<>();
+            for (RevenueDTO revenueList : revenueDTOList) {
+                totalMoneyMap.put(revenueList.getMonth(), revenueList.getTotal());
+            }
 
+            List<Integer> moneyList = new ArrayList<>();
+            for (int i = 0; i < 12; i++) {
+                moneyList.add(totalMoneyMap.getOrDefault(i, 0));
+            }
+            return new ResponseEntity<>(moneyList, HttpStatus.OK);
+        }
+    }
 }

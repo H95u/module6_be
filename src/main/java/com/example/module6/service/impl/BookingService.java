@@ -1,20 +1,21 @@
 package com.example.module6.service.impl;
 
 import com.example.module6.model.Booking;
+import com.example.module6.model.DTO.RevenueDTO;
 import com.example.module6.model.User;
 import com.example.module6.repository.IBookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class BookingService {
 
     @Autowired
     private IBookingRepository iBookingRepository;
-    @Autowired UserService userService;
+    @Autowired
+    UserService userService;
 
     public Booking rentService(Booking booking) {
         return iBookingRepository.save(booking);
@@ -28,6 +29,7 @@ public class BookingService {
         }
         return null;
     }
+
     public Booking finishBookingUser(Long bookingId) {
         Booking booking = iBookingRepository.findById(bookingId).orElse(null);
         if (booking != null) {
@@ -53,12 +55,18 @@ public class BookingService {
         Booking booking = iBookingRepository.findById(bookingId).orElse(null);
         if (booking != null) {
             User bookingUser = userService.findOne(booking.getBookingUser().getId()).get();
+            User bookedUser = userService.findOne(booking.getBookingUser().getId()).get();
             bookingUser.setMoney(bookingUser.getMoney() + booking.getTotal());
+            bookedUser.setRentCount(bookedUser.getRentCount() - 1);
             userService.save(bookingUser);
             booking.setStatus(4);
             return iBookingRepository.save(booking);
         }
         return null;
+    }
+
+    public List<RevenueDTO> findAllTotalByBookedUserId(Long bookedUserId, Integer year) {
+        return iBookingRepository.findAllTotalByBookedUserId(bookedUserId, year);
     }
 
     public List<Booking> getBookingsByBookedUserId(Long bookedUserId) {
