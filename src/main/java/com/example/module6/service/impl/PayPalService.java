@@ -22,7 +22,7 @@ public class PayPalService {
     @Value("${paypal.sandbox.api.base-url}")
     private String sandboxApiBaseUrl;
 
-    public boolean withdrawFromPayPal(Double amount) {
+    public boolean withdrawFromPayPal(Double amount, String email) {
         RestTemplate restTemplate = new RestTemplate();
 
         // Set up headers with client ID and secret for authentication
@@ -41,10 +41,10 @@ public class PayPalService {
                 "  \"items\": [\n" +
                 "    {\n" +
                 "      \"recipient_type\": \"EMAIL\",\n" +
-                "      \"receiver\": \"" + "lover1995@gmail.com" + "\",\n" +
+                "      \"receiver\": \"" + email + "\",\n" +
                 "      \"note\": \"Thank you.\",\n" +
                 "      \"amount\": {\n" +
-                "        \"value\": \"" + amount + "\",\n" +
+                "        \"value\": \"" + (amount / 23000) + "\",\n" +
                 "        \"currency\": \"USD\"\n" +
                 "      },\n" +
                 "      \"sender_item_id\": \"" + payoutItemId + "\"\n" +

@@ -34,13 +34,20 @@ public class PaypalControllerAPI {
     }
 
     @PostMapping("/withdraw/{id}")
-    public ResponseEntity<String> withdrawFromPayPal(@PathVariable Long id,
-                                                     @RequestParam Double amount) {
-        if (payPalService.withdrawFromPayPal(amount)) {
-            return ResponseEntity.ok("Withdrawal from PayPal successful.");
-        } else {
-            return ResponseEntity.badRequest().body("Withdrawal from PayPal failed.");
+    public ResponseEntity<?> withdrawFromPayPal(@PathVariable Long id,
+                                                @RequestParam Double amount,
+                                                @RequestParam String email) {
+        Optional<User> user = userService.findOne(id);
+        if (user.isPresent()) {
+            if (payPalService.withdrawFromPayPal(amount, email)) {
+                user.get().setMoney(user.get().getMoney() - amount);
+                userService.save(user.get());
+                return new ResponseEntity<>(user.get(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
         }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
 }
