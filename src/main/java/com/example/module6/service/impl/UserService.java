@@ -65,6 +65,10 @@ public class UserService implements UserDetailsService, IUserService {
         return iUserRepository.findAllByOrderByViewCountDesc();
     }
 
+    public List<User> findAllRentCountDesc() {
+        return iUserRepository.findAllByOrderByRentCountDesc();
+    }
+
     public List<User> findAvailableUser() {
         return iUserRepository.findAvailableUser();
     }
