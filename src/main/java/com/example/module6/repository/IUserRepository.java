@@ -15,6 +15,8 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 
     List<User> findAllByOrderByViewCountDesc();
 
+    List<User> findAllByOrderByRentCountDesc();
+
     @Query(value = "select * from lover_module6.user where status = 1", nativeQuery = true)
     List<User> findAvailableUser();
 
