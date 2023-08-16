@@ -1,13 +1,16 @@
 package com.example.module6.service.impl;
 
 import com.example.module6.model.Booking;
+import com.example.module6.model.DTO.RevenueDTO;
 import com.example.module6.model.User;
 import com.example.module6.repository.IBookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BookingService {
@@ -53,11 +56,23 @@ public class BookingService {
         Booking booking = iBookingRepository.findById(bookingId).orElse(null);
         if (booking != null) {
             User bookingUser = userService.findOne(booking.getBookingUser().getId()).get();
+            User bookedUser = userService.findOne(booking.getBookingUser().getId()).get();
             bookingUser.setMoney(bookingUser.getMoney() + booking.getTotal());
+            bookedUser.setRentCount(bookedUser.getRentCount() - 1);
             userService.save(bookingUser);
             booking.setStatus(4);
             return iBookingRepository.save(booking);
         }
+        return null;
+    }
+    public List<RevenueDTO> findAllTotalByBookedUserId(Long bookedUserId, Integer idYear) {
+        List<RevenueDTO> revenueDTOList = iBookingRepository.findAllTotalByBookedUserId(bookedUserId, idYear);
+        revenueDTOList.stream().collect(Collectors.toMap(RevenueDTO::getMonth, RevenueDTO::getTotal));
+        List<Double> moneyList = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+
+        }
+
         return null;
     }
 
