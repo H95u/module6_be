@@ -43,6 +43,11 @@ public class UserControllerAPI {
         return new ResponseEntity<>(userService.findAllViewCountDesc(), HttpStatus.OK);
     }
 
+    @GetMapping("/sort-by-rent-count-desc")
+    public ResponseEntity<List<User>> findAllRentCountDesc(){
+        return new ResponseEntity<>(userService.findAllRentCountDesc(), HttpStatus.OK);
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<?> findOne(@PathVariable Long id) {
         Optional<User> userOptional = userService.findOne(id);
