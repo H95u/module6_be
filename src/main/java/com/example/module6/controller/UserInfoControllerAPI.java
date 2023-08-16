@@ -37,7 +37,6 @@ public class UserInfoControllerAPI {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<Optional<UserInfo>> findOne(@PathVariable Long id) {
         return new ResponseEntity<>(userInfoService.findOne(id), HttpStatus.OK);
