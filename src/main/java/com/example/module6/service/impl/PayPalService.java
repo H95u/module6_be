@@ -44,7 +44,7 @@ public class PayPalService {
                 "      \"receiver\": \"" + email + "\",\n" +
                 "      \"note\": \"Thank you.\",\n" +
                 "      \"amount\": {\n" +
-                "        \"value\": \"" + (amount / 23000) + "\",\n" +
+                "        \"value\": \"" + Math.ceil(amount / 23000) + "\",\n" +
                 "        \"currency\": \"USD\"\n" +
                 "      },\n" +
                 "      \"sender_item_id\": \"" + payoutItemId + "\"\n" +
