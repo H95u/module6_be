@@ -15,10 +15,13 @@ public interface IBookingRepository extends JpaRepository<Booking, Long> {
 
     List<Booking> findByBookedUserIdAndStatus(Long bookedUserId, Integer status);
 
-    @Query(value = "SELECT SUM(total) AS total, MONTH(end_time) FROM booking" +
+    @Query(value = "SELECT " +
+            "   SUM(total) AS total, " +
+            "   MONTH(end_time) AS `month` " +
+            " FROM booking" +
             " WHERE booked_user_id = :bookedUserId" +
-            " AND YEAR(end_time) = :isYear " +
-            " AND status = 5" +
+            "   AND YEAR(end_time) = :year " +
+            "   AND status = 5" +
             " GROUP BY MONTH(end_time)", nativeQuery = true)
-    List<RevenueDTO> findAllTotalByBookedUserId(@Param("bookedUserId") Long bookedUserId, @Param("isYear") Integer isYear);
+    List<RevenueDTO> findAllTotalByBookedUserId(@Param("bookedUserId") Long bookedUserId, @Param("year") Integer year);
 }

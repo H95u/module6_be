@@ -121,23 +121,19 @@ public class BookingController {
         }
     }
     @GetMapping("/revenue/{bookedUserId}")
-    public ResponseEntity<?> findAllTotalByBookedUserId(@PathVariable Long bookedUserId, @RequestParam Integer isYear) {
-        List<RevenueDTO> revenueDTOList = bookingService.findAllTotalByBookedUserId(bookedUserId, isYear);
+    public ResponseEntity<?> findAllTotalByBookedUserId(@PathVariable Long bookedUserId, @RequestParam Integer year) {
+        List<RevenueDTO> revenueDTOList = bookingService.findAllTotalByBookedUserId(bookedUserId, year);
         if (revenueDTOList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            Map<Integer, Double> totalMoneyMap = new HashMap<>();
+            Map<Integer, Integer> totalMoneyMap = new HashMap<>();
             for (RevenueDTO revenueList : revenueDTOList) {
                 totalMoneyMap.put(revenueList.getMonth(), revenueList.getTotal());
             }
 
-            List<Double> moneyList = new ArrayList<>();
+            List<Integer> moneyList = new ArrayList<>();
             for (int i = 0; i < 12; i++) {
-                if (totalMoneyMap.containsKey(i)) {
-                    moneyList.add(totalMoneyMap.get(i));
-                } else {
-                    moneyList.add(0D);
-                }
+                moneyList.add(totalMoneyMap.getOrDefault(i, 0));
             }
             return new ResponseEntity<>(moneyList, HttpStatus.OK);
         }

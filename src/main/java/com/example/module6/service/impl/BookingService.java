@@ -65,8 +65,8 @@ public class BookingService {
         return null;
     }
 
-    public List<RevenueDTO> findAllTotalByBookedUserId(Long bookedUserId, Integer iYear) {
-        return iBookingRepository.findAllTotalByBookedUserId(bookedUserId, iYear);
+    public List<RevenueDTO> findAllTotalByBookedUserId(Long bookedUserId, Integer year) {
+        return iBookingRepository.findAllTotalByBookedUserId(bookedUserId, year);
     }
 
     public List<Booking> getBookingsByBookedUserId(Long bookedUserId) {
