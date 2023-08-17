@@ -132,7 +132,7 @@ public class BookingController {
             }
 
             List<Integer> moneyList = new ArrayList<>();
-            for (int i = 0; i < 12; i++) {
+            for (int i = 1; i <= 12; i++) {
                 moneyList.add(totalMoneyMap.getOrDefault(i, 0));
             }
             return new ResponseEntity<>(moneyList, HttpStatus.OK);
