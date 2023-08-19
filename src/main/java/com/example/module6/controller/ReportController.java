@@ -29,11 +29,11 @@ public class ReportController {
     @PostMapping
     public ResponseEntity<?> create(@RequestBody CreateReportRequest createReportRequest) {
         Report report = new Report();
-        User bookingUser = userService.findOne(createReportRequest.getBookingUserId()).orElse(null);
-        User bookedUser = userService.findOne(createReportRequest.getBookedUserId()).orElse(null);
+        User accuser = userService.findOne(createReportRequest.getAccuserId()).orElse(null);
+        User accused = userService.findOne(createReportRequest.getAccusedId()).orElse(null);
         report.setDescription(createReportRequest.getDescription());
-        report.setBookingUser(bookingUser);
-        report.setBookedUser(bookedUser);
+        report.setAccused(accused);
+        report.setAccuser(accuser);
         reportService.save(report);
         return new ResponseEntity<>(report, HttpStatus.CREATED);
     }
