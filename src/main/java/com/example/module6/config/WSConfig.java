@@ -38,7 +38,7 @@ public class WSConfig implements WebSocketConfigurer {
             @Override
             protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
                 String payload = message.getPayload();
-                session.sendMessage(new TextMessage("Processed: " + payload));
+                session.sendMessage(new TextMessage(payload));
             }
         }, "/api/notification").setAllowedOrigins("*");
     }

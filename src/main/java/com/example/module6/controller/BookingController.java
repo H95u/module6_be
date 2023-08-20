@@ -28,6 +28,11 @@ public class BookingController {
         return bookingService.getBookingsByBookedUserId(bookedUserId);
     }
 
+    @GetMapping("/waiting/{bookedUserId}")
+    public List<Booking> getBookingsByBookedUserIdAndWaiting(@PathVariable Long bookedUserId) {
+        return bookingService.getBookingsByBookedUserIdAndWaiting(bookedUserId);
+    }
+
     @GetMapping("/booking-users/{bookingUserId}")
     public List<Booking> getBookingsByBookingUserId(@PathVariable Long bookingUserId) {
         return bookingService.getBookingsByBookingUserId(bookingUserId);
@@ -76,10 +81,12 @@ public class BookingController {
     public ResponseEntity<Booking> acceptBooking(@PathVariable Long bookingId) {
         return new ResponseEntity<>(bookingService.acceptBooking(bookingId), HttpStatus.ACCEPTED);
     }
+
     @PutMapping("/{bookingId}/finish-user")
     public ResponseEntity<Booking> finishBookingUser(@PathVariable Long bookingId) {
         return new ResponseEntity<>(bookingService.finishBookingUser(bookingId), HttpStatus.ACCEPTED);
     }
+
     @PutMapping("/{bookingId}/finish-partner")
     public ResponseEntity<Booking> finishBookedUser(@PathVariable Long bookingId) {
         return new ResponseEntity<>(bookingService.finishBookedUser(bookingId), HttpStatus.ACCEPTED);
@@ -120,6 +127,7 @@ public class BookingController {
             return new ResponseEntity<>(bookingOptional.get(), HttpStatus.ACCEPTED);
         }
     }
+
     @GetMapping("/revenue/{bookedUserId}")
     public ResponseEntity<?> findAllTotalByBookedUserId(@PathVariable Long bookedUserId, @RequestParam Integer year) {
         List<RevenueDTO> revenueDTOList = bookingService.findAllTotalByBookedUserId(bookedUserId, year);
