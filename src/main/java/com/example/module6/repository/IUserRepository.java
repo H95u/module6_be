@@ -20,8 +20,12 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 
     List<User> findAllByOrderByRentCountDesc();
 
-    @Query(value = "select * from lover_module6.user where status = 1", nativeQuery = true)
+    @Query(value = "SELECT DISTINCT u.* FROM user u " +
+            "JOIN user_options uo ON u.id = uo.user_id " +
+            "JOIN options o ON uo.options_id = o.id " +
+            "WHERE u.status = 1", nativeQuery = true)
     List<User> findAvailableUser();
+
 
     @Modifying
     @Query(value = "INSERT INTO lover_module6.user_options (user_id, options_id) VALUES (:userId, :optionId)", nativeQuery = true)

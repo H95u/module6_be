@@ -13,7 +13,7 @@ public class Report {
     @Column(columnDefinition = "longtext")
     private String description;
     @ManyToOne
-    private User bookedUser;
+    private User accuser;
     @ManyToOne
-    private User bookingUser;
+    private User accused;
 }

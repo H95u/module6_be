@@ -77,6 +77,9 @@ public class BookingService {
         return iBookingRepository.findByBookedUserIdAndStatus(bookedUserId, 2);
     }
 
+    public List<Booking> getBookingsByBookedUserIdAndWaiting(Long bookedUserId) {
+        return iBookingRepository.findByBookedUserIdAndStatus(bookedUserId, 1);
+    }
 
     public List<Booking> getBookingsByBookingUserId(Long bookingUserId) {
         return iBookingRepository.findAllByBookingUser_Id(bookingUserId);

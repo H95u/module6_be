@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class CreateReportRequest {
     private String description;
-    private Long bookedUserId;
-    private Long bookingUserId;
+    private Long accusedId;
+    private Long accuserId;
 }
