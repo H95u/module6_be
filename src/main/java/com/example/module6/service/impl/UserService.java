@@ -92,7 +92,7 @@ public class UserService implements UserDetailsService, IUserService {
 
     @Override
     public List<User> searchByUsername(String username) {
-        return iUserRepository.searchByUsername(username);
+        return iUserRepository.findAllByUsernameContainingIgnoreCase(username);
     }
 
     public List<User> findByCriteria(Integer gender, Long addressId, Long viewCount, Long rentCount,

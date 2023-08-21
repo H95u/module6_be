@@ -3,6 +3,7 @@ package com.example.module6.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -16,4 +17,5 @@ public class Report {
     private User accuser;
     @ManyToOne
     private User accused;
+    private LocalDate reportTime = LocalDate.now();
 }

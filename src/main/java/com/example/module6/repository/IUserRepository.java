@@ -32,8 +32,7 @@ public interface IUserRepository extends JpaRepository<User, Long> {
     @Query(value = "DELETE FROM lover_module6.user_options WHERE user_id = :userId", nativeQuery = true)
     void deleteUserOptionByUserId(@Param("userId") Long userId);
 
-    @Query(value = "SELECT u FROM User u WHERE u.username LIKE %:username% and u.status = 1 ")
-    List<User> searchByUsername(@Param("username") String username);
+    List<User> findAllByUsernameContainingIgnoreCase(String username);
 
     @Query("SELECT u FROM User u " +
             "WHERE (:gender IS NULL OR u.gender = :gender) " +
