@@ -28,6 +28,15 @@ public class UserService implements UserDetailsService, IUserService {
         return iUserRepository.findAllByUsername(username);
     }
 
+    public User findUserById(Long id) {
+        return iUserRepository.findUserById(id);
+    }
+    public List<User> getLockedAccounts() {
+        return iUserRepository.findByIsLocked(true);
+    }
+
+
+
     public boolean add(User user) {
         iUserRepository.save(user);
         return true;
@@ -72,6 +81,8 @@ public class UserService implements UserDetailsService, IUserService {
     public List<User> findAvailableUser() {
         return iUserRepository.findAvailableUser();
     }
+
+
 
 
     @Override

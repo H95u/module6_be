@@ -5,6 +5,7 @@ import com.example.module6.model.Message;
 import com.example.module6.model.User;
 import com.example.module6.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,8 @@ import java.util.List;
 public class MessageRequestService {
     @Autowired
     private MessageRepository messageRepository;
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     public Message sendMessage(MessageRequestDTO messageRequest) {
         String content = messageRequest.getContent();
@@ -31,8 +34,10 @@ public class MessageRequestService {
         message.setTimestamp(LocalDateTime.now());
         message.setSender(sender);
         message.setReceiver(receiver);
+        message = messageRepository.save(message);
+        messagingTemplate.convertAndSend("/topic/messages/" + receiverId, message);
 
-        return messageRepository.save(message);
+        return message;
     }
     public List<Message> getReceivedMessages(Long receiverId){
         return messageRepository.findByReceiverId(receiverId);

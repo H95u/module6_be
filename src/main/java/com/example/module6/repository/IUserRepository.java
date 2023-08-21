@@ -12,6 +12,9 @@ import java.util.List;
 @Repository
 public interface IUserRepository extends JpaRepository<User, Long> {
     User findAllByUsername(String username);
+    User findUserById(Long id);
+
+    List<User> findByIsLocked(boolean isLocked);
 
     List<User> findAllByOrderByViewCountDesc();
 
@@ -33,6 +36,8 @@ public interface IUserRepository extends JpaRepository<User, Long> {
     void deleteUserOptionByUserId(@Param("userId") Long userId);
 
     List<User> findAllByUsernameContainingIgnoreCase(String username);
+
+
 
     @Query("SELECT u FROM User u " +
             "WHERE (:gender IS NULL OR u.gender = :gender) " +
