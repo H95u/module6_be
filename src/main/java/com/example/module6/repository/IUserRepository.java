@@ -12,6 +12,9 @@ import java.util.List;
 @Repository
 public interface IUserRepository extends JpaRepository<User, Long> {
     User findAllByUsername(String username);
+    User findUserById(Long id);
+
+    List<User> findByIsLocked(boolean isLocked);
 
     List<User> findAllByOrderByViewCountDesc();
 
@@ -30,6 +33,8 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "SELECT u FROM User u WHERE u.username LIKE %:username% and u.status = 1 ")
     List<User> searchByUsername(@Param("username") String username);
+
+
 
     @Query("SELECT u FROM User u " +
             "WHERE (:gender IS NULL OR u.gender = :gender) " +

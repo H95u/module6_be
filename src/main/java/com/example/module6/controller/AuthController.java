@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 
 @RestController
 @CrossOrigin("*")
@@ -34,13 +35,56 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @GetMapping("/locked-accounts")
+    public ResponseEntity<?> getLockedAccounts(){
+        List<User> lockedAccounts = userService.getLockedAccounts();
+        if(lockedAccounts.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(lockedAccounts,HttpStatus.OK);
+    }
+    @PutMapping("/lock/{userId}")
+    public ResponseEntity<?> lockAccount(@PathVariable Long userId) {
+        User user = userService.findUserById(userId);
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        user.setLocked(true);
+        userService.save(user);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Account locked");
+    }
+
+    @PutMapping("/unlock/{userId}")
+    public ResponseEntity<?> unlockAccount(@PathVariable Long userId) {
+        User user = userService.findUserById(userId);
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        user.setLocked(false);
+        userService.save(user);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Account unlocked");
+    }
+
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
+        User userInfo  = userService.findByUsername(user.getUsername());
+        if (userInfo  == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
+        }
+        if(userInfo.isLocked()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Account is locked");
+        }
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        User userInfo = userService.findByUsername(user.getUsername());
         return ResponseEntity.ok(new ResponseEntity<>(userInfo, HttpStatus.OK));
+
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)

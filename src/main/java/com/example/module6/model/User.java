@@ -27,6 +27,7 @@ public class User {
     private long viewCount = 0;
     private long rentCount = 0;
     private LocalDate createdDate;
+    private boolean isLocked;
     @ManyToMany
     private List<Options> options;
     @ManyToOne
