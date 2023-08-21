@@ -70,7 +70,6 @@ public class AuthController {
 
         return ResponseEntity.status(HttpStatus.OK).body("Account unlocked");
     }
-
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
         User userInfo  = userService.findByUsername(user.getUsername());
