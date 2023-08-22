@@ -1,0 +1,24 @@
+package com.example.module6.repository;
+
+import com.example.module6.model.ChatMessage;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
+
+public interface ChatMessageRepository extends JpaRepository<ChatMessage, String> {
+    @Query(" FROM"
+            + "    ChatMessage m"
+            + "  WHERE"
+            + "    m.authorUser.id IN (:userIdOne, :userIdTwo)"
+            + "  AND"
+            + "    m.recipientUser.id IN (:userIdOne, :userIdTwo)"
+            + "  ORDER BY"
+            + "    m.timeSent"
+            + "  DESC")
+    public List<ChatMessage> getExistingChatMessages(
+            @Param("userIdOne") long userIdOne, @Param("userIdTwo") long userIdTwo, Pageable pageable);
+
+}

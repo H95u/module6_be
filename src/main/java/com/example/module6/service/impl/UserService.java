@@ -101,4 +101,5 @@ public class UserService implements UserDetailsService, IUserService {
         return iUserRepository.findByCriteria(gender, addressId, minAge, maxAge, username, status,
                 viewCount, rentCount, viewCountOrder, rentCountOrder);
     }
+
 }
