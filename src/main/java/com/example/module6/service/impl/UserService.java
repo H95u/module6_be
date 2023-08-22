@@ -31,10 +31,10 @@ public class UserService implements UserDetailsService, IUserService {
     public User findUserById(Long id) {
         return iUserRepository.findUserById(id);
     }
+
     public List<User> getLockedAccounts() {
         return iUserRepository.findByIsLocked(true);
     }
-
 
 
     public boolean add(User user) {
@@ -71,7 +71,7 @@ public class UserService implements UserDetailsService, IUserService {
     }
 
     public List<User> findAllViewCountDesc() {
-        return iUserRepository.findAllByOrderByViewCountDesc();
+        return iUserRepository.findAllByStatusOrderByViewCountDesc(1);
     }
 
     public List<User> findAllRentCountDesc() {
@@ -81,8 +81,6 @@ public class UserService implements UserDetailsService, IUserService {
     public List<User> findAvailableUser() {
         return iUserRepository.findAvailableUser();
     }
-
-
 
 
     @Override
