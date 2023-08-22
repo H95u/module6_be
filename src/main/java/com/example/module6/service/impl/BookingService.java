@@ -55,10 +55,11 @@ public class BookingService {
         Booking booking = iBookingRepository.findById(bookingId).orElse(null);
         if (booking != null) {
             User bookingUser = userService.findOne(booking.getBookingUser().getId()).get();
-            User bookedUser = userService.findOne(booking.getBookingUser().getId()).get();
+            User bookedUser = userService.findOne(booking.getBookedUser().getId()).get();
             bookingUser.setMoney(bookingUser.getMoney() + booking.getTotal());
             bookedUser.setRentCount(bookedUser.getRentCount() - 1);
             userService.save(bookingUser);
+            userService.save(bookedUser);
             booking.setStatus(4);
             return iBookingRepository.save(booking);
         }

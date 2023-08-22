@@ -24,7 +24,7 @@ public interface ICCDVRepository extends JpaRepository<Booking, Long> {
             "FROM Booking b " +
             "WHERE b.bookedUser.id = :bookedUserId " +
             "GROUP BY b.bookingUser.id, b.bookingUser, b.startTime, b.endTime " +
-            "ORDER BY b.startTime DESC")
+            "ORDER BY b.endTime DESC")
     List<UserBookingEndTimeDTO> findTop3RecentRenters(@Param("bookedUserId") Long bookedUserId);
 
 
