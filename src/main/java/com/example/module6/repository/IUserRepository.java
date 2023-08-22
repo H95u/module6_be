@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface IUserRepository extends JpaRepository<User, Long> {
     User findAllByUsername(String username);
+
     User findUserById(Long id);
 
     List<User> findByIsLocked(boolean isLocked);
@@ -37,7 +38,7 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 
     List<User> findAllByUsernameContainingIgnoreCase(String username);
 
-
+    List<User> findAllByUsernameContainingIgnoreCaseAndStatus(String username, Integer status);
 
     @Query("SELECT u FROM User u " +
             "WHERE (:gender IS NULL OR u.gender = :gender) " +

@@ -23,23 +23,6 @@ public class FilterControllerAPI {
         return new ResponseEntity<>(filterService.filter(filterDTO), HttpStatus.OK);
     }
 
-    @Autowired
-    private UserService userService;
-
-    @GetMapping("/search")
-    public List<User> searchUsers(@RequestParam(required = false) Integer gender,
-                                  @RequestParam(required = false) Long addressId,
-                                  @RequestParam(required = false) Long viewCount,
-                                  @RequestParam(required = false) Long rentCount,
-                                  @RequestParam(required = false) Integer minAge,
-                                  @RequestParam(required = false) Integer maxAge,
-                                  @RequestParam(required = false) String username,
-                                  @RequestParam(required = false) Integer status,
-                                  @RequestParam(required = false) Integer viewCountOrder,
-                                  @RequestParam(required = false) Integer rentCountOrder) {
-        return userService.findByCriteria(gender, addressId, viewCount, rentCount,
-                minAge, maxAge, username, status, viewCountOrder, rentCountOrder);
-    }
 
     @PostMapping("/option/{id}")
     public ResponseEntity<List<User>> findByOption(@PathVariable Long id) {

@@ -104,10 +104,7 @@ public class UserService implements UserDetailsService, IUserService {
         return iUserRepository.findAllByUsernameContainingIgnoreCase(username);
     }
 
-    public List<User> findByCriteria(Integer gender, Long addressId, Long viewCount, Long rentCount,
-                                     Integer minAge, Integer maxAge, String username, Integer status,
-                                     Integer viewCountOrder, Integer rentCountOrder) {
-        return iUserRepository.findByCriteria(gender, addressId, minAge, maxAge, username, status,
-                viewCount, rentCount, viewCountOrder, rentCountOrder);
+    public List<User> searchByUsernameAndAvailable(String username) {
+        return iUserRepository.findAllByUsernameContainingIgnoreCaseAndStatus(username, 1);
     }
 }

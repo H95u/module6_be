@@ -44,7 +44,7 @@ public class UserControllerAPI {
     }
 
     @GetMapping("/sort-by-rent-count-desc")
-    public ResponseEntity<List<User>> findAllRentCountDesc(){
+    public ResponseEntity<List<User>> findAllRentCountDesc() {
         return new ResponseEntity<>(userService.findAllRentCountDesc(), HttpStatus.OK);
     }
 
@@ -140,12 +140,21 @@ public class UserControllerAPI {
 
 
     @GetMapping("/search")
-    public ResponseEntity<List<User>> searchByTitle(@RequestParam(required = false, defaultValue = "") String username) {
+    public ResponseEntity<List<User>> searchAllByUsername(@RequestParam(required = false, defaultValue = "") String username) {
         List<User> tours = userService.searchByUsername(username);
         if (tours.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(tours, HttpStatus.OK);
+    }
+
+    @GetMapping("/search-available")
+    public ResponseEntity<List<User>> searchAvailableByUsername(@RequestParam(required = false, defaultValue = "") String username) {
+        List<User> users = userService.searchByUsernameAndAvailable(username);
+        if (users.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
 }
