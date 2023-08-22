@@ -16,7 +16,7 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 
     List<User> findByIsLocked(boolean isLocked);
 
-    List<User> findAllByOrderByViewCountDesc();
+    List<User> findAllByStatusOrderByViewCountDesc(Integer status);
 
     List<User> findAllByOrderByRentCountDesc();
 
