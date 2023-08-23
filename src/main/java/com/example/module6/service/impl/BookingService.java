@@ -71,7 +71,7 @@ public class BookingService {
     }
 
     public List<Booking> getBookingsByBookedUserId(Long bookedUserId) {
-        return iBookingRepository.findByBookedUserId(bookedUserId);
+        return iBookingRepository.findByBookedUserIdOrderByEndTime(bookedUserId);
     }
 
     public List<Booking> getBookingsByBookedUserIdAndAccepted(Long bookedUserId) {
@@ -83,7 +83,7 @@ public class BookingService {
     }
 
     public List<Booking> getBookingsByBookingUserId(Long bookingUserId) {
-        return iBookingRepository.findAllByBookingUser_Id(bookingUserId);
+        return iBookingRepository.findAllByBookingUser_IdOrderByEndTime(bookingUserId);
     }
 
     public Optional<Booking> findById(Long id) {
