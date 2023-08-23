@@ -13,9 +13,9 @@ import java.util.List;
 @Transactional
 @Repository
 public interface IBookingRepository extends JpaRepository<Booking, Long> {
-    List<Booking> findByBookedUserIdOrderByEndTime(Long bookedUserId);
+    List<Booking> findByBookedUserIdOrderByEndTimeDesc(Long bookedUserId);
 
-    List<Booking> findAllByBookingUser_IdOrderByEndTime(Long bookingId);
+    List<Booking> findAllByBookingUser_IdOrderByEndTimeDesc(Long bookingId);
 
     List<Booking> findByBookedUserIdAndStatus(Long bookedUserId, Integer status);
 
