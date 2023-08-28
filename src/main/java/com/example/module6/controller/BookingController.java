@@ -28,6 +28,7 @@ public class BookingController {
         return bookingService.getBookingsByBookedUserId(bookedUserId);
     }
 
+
     @GetMapping("/waiting/{bookedUserId}")
     public List<Booking> getBookingsByBookedUserIdAndWaiting(@PathVariable Long bookedUserId) {
         return bookingService.getBookingsByBookedUserIdAndWaiting(bookedUserId);
