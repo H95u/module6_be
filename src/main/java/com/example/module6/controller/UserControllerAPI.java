@@ -129,7 +129,11 @@ public class UserControllerAPI {
             LocalDate dob = updatedUser.getDob();
             Period period = Period.between(dob, nowDate);
             int age = period.getYears();
-            existingUser.setAge(age);
+            if (age >= 16 && age <= 60) {
+                existingUser.setAge(age);
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
             existingUser.setAddress(addressService.findById(updatedUser.getAddressId()));
             existingUser.setGender(updatedUser.getGender());
             userService.save(existingUser);
